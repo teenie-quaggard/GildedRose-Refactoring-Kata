@@ -11,30 +11,33 @@ class Shop {
     this.items = items;
   }
 
-
   itemValidator(item){
-
     if (typeof item.name !== 'string') {
       throw 'Item Name parameter should be a string'
     }
-
     if (typeof item.sellIn !== 'number'){
       throw 'Item SellIn parameter should be a number'
     }
-
     if (typeof item.quality !== 'number' || item.quality < 0 || item.quality > 50){
       throw 'Item Quality parameter should be a whole number between 0 and 50'
     }
-
   }
 
-  
+  reduceSellInBy1(item){ item.sellIn = item.sellIn - 1; }
+
+  reduceQuality(item){
+      return item.sellin >= 0 ? item.quality = item.quality - 1 : item.quality = item.quality - 2;
+  }
 
   updateQuality(){
     this.items.map(item => {
       console.log(item)
-      return this.itemValidator(item);
+        this.itemValidator(item);
+        this.reduceSellInBy1(item);
+        this.reduceQuality(item);
+      return item;
     })
+    return this.items;
   }
 
 

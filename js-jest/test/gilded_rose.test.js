@@ -1,15 +1,6 @@
 const {Shop, Item} = require("../src/gilded_rose");
 
-// describe('initialise', () => {
-//   it('should foo', () => {
-//     const gildedRose = new Shop([new Item("foo", 0, 0)]);
-//     const items = gildedRose.updateQuality();
-//     console.log(items, "ITEMSS")
-//     expect(items[0].name).toBe("foo");
-//   });
-// });
-
-// describe('special items in store', () => {
+describe('special items in store', () => {
 //   it('Aged Brie increases in Quality the older it gets', () => {
 
 //   })
@@ -34,7 +25,7 @@ const {Shop, Item} = require("../src/gilded_rose");
 
 //   })
 
-// })
+})
 
 describe('general rules for items in store', () => {
 
@@ -78,22 +69,24 @@ describe('general rules for items in store', () => {
     expect(updateItemQuality).toThrowError('Item Quality parameter should be a whole number between 0 and 50');
   })
 
-  // it('should lower its Sellin value when the updateQuality function is run', () => {
-  //   const initialItem = new Item('foo', 5, 10)
-  //   const gildedRose = new Shop([{...initialItem}]);
-  //   const items = gildedRose.updateQuality();
-  
-  //   expect(items[0].sellIn).toBeLessThan(initialItem);
+  it('Sellin value should reduce when the updateQuality function is run', () => {
+    const initialItem = { name: 'foo', sellIn: 5, quality: 20 };
+    const gildedRose = new Shop([new Item('foo', 5, 20)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toBeLessThan(initialItem.sellIn);
+  })
 
-  // })
+  it('Quality value should reduce when the updateQuality function is run', () => {
+    const initialItem = { name: 'foo', sellIn: 5, quality: 20 };
+    const gildedRose = new Shop([new Item('foo', 5, 20)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBeLessThan(initialItem.quality);
+  })
 
-  // it('should lower its Quality value when the updateQuality function is run', () => {
-
-  // })
-
-  // it('quality should degrade twice as fast after sell by date', () => {
-
-  // })
-
+  it('quality should degrade twice as fast after the sell by date', () => {
+    const gildedRose = new Shop([new Item('foo', 0, 20)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(18);
+  })
 
 })
